@@ -1,98 +1,216 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Joystick Mapping Explorer</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<main class="app" id="app">
-  <header class="header">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Joystick Mapping Explorer
+  </title>
+  <link href="styles.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <main class="app" id="app">
+   <header class="header">
     <div>
-      <p class="eyebrow">Mobility Chair Input Design</p>
-      <h1>Joystick Mapping Explorer</h1>
-      <p class="intro">Move any joystick below to apply the same input to all three mappings. Compare the resulting chair movement and discuss which mapping is easiest to understand and control.</p>
+     <p class="eyebrow">
+      Mobility Chair Input Design
+     </p>
+     <h1>
+      Joystick Mapping Explorer
+     </h1>
+     <p class="intro">
+      Move any joystick below to apply the same input to all three mappings. Compare the resulting chair movement and discuss which mapping is easiest to understand and control.
+     </p>
     </div>
-    <div class="view-switch" role="group" aria-label="View mode">
-      <button id="participantView" class="active" type="button">Participant view</button>
-      <button id="presenterView" type="button">Presenter view</button>
+    <div aria-label="View mode" class="view-switch" role="group">
+     <button class="active" id="participantView" type="button">
+      Participant view
+     </button>
+     <button id="presenterView" type="button">
+      Presenter view
+     </button>
     </div>
-  </header>
-
-  <section class="toolbar panel" aria-label="Presentation controls">
+   </header>
+   <section aria-label="Presentation controls" class="toolbar panel">
     <div class="toolbar-group">
-      <label for="presetSelect">Preset</label>
-      <select id="presetSelect"></select>
-      <button id="applyPreset" type="button">Apply</button>
+     <label for="presetSelect">
+      Preset
+     </label>
+     <select id="presetSelect">
+     </select>
+     <button id="applyPreset" type="button">
+      Apply
+     </button>
     </div>
     <div class="toolbar-group">
-      <button id="savePreset" type="button">Save current as preset</button>
-      <button id="saveBrowser" type="button">Save</button>
-      <button id="exportConfig" type="button">Export JSON</button>
-      <label class="file-button">Import JSON<input id="importConfig" type="file" accept="application/json,.json"></label>
-      <button id="resetAll" type="button">Reset</button>
+     <button id="savePreset" type="button">
+      Save current as preset
+     </button>
+     <button id="saveBrowser" type="button">
+      Save
+     </button>
+     <button id="exportConfig" type="button">
+      Export JSON
+     </button>
+     <label class="file-button">
+      Import JSON
+      <input accept="application/json,.json" id="importConfig" type="file"/>
+     </label>
+     <button id="resetAll" type="button">
+      Reset
+     </button>
     </div>
-    <p id="saveStatus" class="status" aria-live="polite"></p>
-  </section>
-
-  <section class="input-bar panel">
+    <p aria-live="polite" class="status" id="saveStatus">
+    </p>
+   </section>
+   <section class="input-bar panel">
     <div>
-      <strong>Shared input</strong>
-      <span id="inputStatus" class="pill">On-screen joystick</span>
+     <strong>
+      Shared input
+     </strong>
+     <span class="pill" id="inputStatus">
+      On-screen joystick
+     </span>
     </div>
     <div class="toolbar-group">
-      <button id="gamepadButton" type="button">Use physical controller</button>
-      <button id="centerButton" type="button">Center joystick</button>
+     <button id="gamepadButton" type="button">
+      Use physical controller
+     </button>
+     <button id="centerButton" type="button">
+      Center joystick
+     </button>
+     <button id="clearPathsButton" type="button">
+      Clear paths
+     </button>
     </div>
-  </section>
-
-  <section id="comparisonGrid" class="comparison-grid" aria-label="Mapping comparisons"></section>
-
-  <section class="panel participant-controls">
-    <h2>Participant controls</h2>
-    <label for="speedResponse">Speed response</label>
+   </section>
+   <section aria-label="Mapping comparisons" class="comparison-grid" id="comparisonGrid">
+   </section>
+   <section class="panel participant-controls">
+    <h2>
+     Participant controls
+    </h2>
+    <label for="speedResponse">
+     Speed response
+    </label>
     <select id="speedResponse">
-      <option value="linear">Linear</option>
-      <option value="fine" selected>More low-speed control</option>
-      <option value="stepped">Slow / medium / fast</option>
+     <option value="linear">
+      Linear
+     </option>
+     <option selected="" value="fine">
+      More low-speed control
+     </option>
+     <option value="stepped">
+      Slow / medium / fast
+     </option>
     </select>
-  </section>
-
-  <section id="presenterPanel" class="panel presenter-panel hidden">
+   </section>
+   <section class="panel presenter-panel hidden" id="presenterPanel">
     <div class="section-heading">
-      <div><h2>Presenter controls</h2><p>Fine-tune one comparison without changing the others.</p></div>
-      <div class="raw-readout" aria-label="Joystick coordinates hidden from participant"><span>Presenter input:</span> <strong id="rawReadout">centered</strong></div>
+     <div>
+      <h2>
+       Presenter controls
+      </h2>
+      <p>
+       Fine-tune one comparison without changing the others.
+      </p>
+     </div>
+     <div aria-label="Joystick coordinates hidden from participant" class="raw-readout">
+      <span>
+       Presenter input:
+      </span>
+      <strong id="rawReadout">
+       centered
+      </strong>
+     </div>
     </div>
-
     <div class="presenter-row">
-      <label for="editSlot">Edit comparison</label>
-      <select id="editSlot"><option value="0">Comparison A</option><option value="1">Comparison B</option><option value="2">Comparison C</option></select>
-      <span id="editNotice" class="pill"></span>
+     <label for="editSlot">
+      Edit comparison
+     </label>
+     <select id="editSlot">
+      <option value="0">
+       Comparison A
+      </option>
+      <option value="1">
+       Comparison B
+      </option>
+      <option value="2">
+       Comparison C
+      </option>
+     </select>
+     <span class="pill" id="editNotice">
+     </span>
     </div>
-
     <div id="sectorEditor">
-      <div class="section-heading compact"><h3>1. Sector geometry</h3><button id="equalize" type="button">Make all equal</button></div>
-      <p class="help">Select one or several sectors. Changing their width automatically redistributes the remaining space so the mapping always totals 360°.</p>
-      <div id="sectorButtons" class="sector-buttons"></div>
-      <div class="width-editor">
-        <label for="sectorWidth">Selected width <strong id="sectorWidthOutput"></strong></label>
-        <input id="sectorWidth" type="range" min="10" max="170" step="1">
-        <button id="minusFive" type="button">−5°</button><button id="plusFive" type="button">+5°</button>
+     <div class="section-heading compact">
+      <h3>
+       1. Sector geometry
+      </h3>
+      <button id="equalize" type="button">
+       Make all equal
+      </button>
+     </div>
+     <p class="help">
+      Select one or several sectors. Changing their width automatically redistributes the remaining space so the mapping always totals 360°.
+     </p>
+     <div class="sector-buttons" id="sectorButtons">
+     </div>
+     <div class="width-editor">
+      <label for="sectorWidth">
+       Selected width
+       <strong id="sectorWidthOutput">
+       </strong>
+      </label>
+      <input id="sectorWidth" max="170" min="10" step="1" type="range"/>
+      <button id="minusFive" type="button">
+       −5°
+      </button>
+      <button id="plusFive" type="button">
+       +5°
+      </button>
+     </div>
+     <div class="toolbar-group">
+      <button id="selectAll" type="button">
+       Select all
+      </button>
+      <button id="clearSelection" type="button">
+       Clear
+      </button>
+      <button id="selectAlternating" type="button">
+       Alternating
+      </button>
+     </div>
+     <div class="editor-divider">
+     </div>
+     <div class="section-heading compact">
+      <div>
+       <h3>
+        2. Labels and actions
+       </h3>
+       <p>
+        Labels are participant-facing. Actions control the simulated path.
+       </p>
       </div>
-      <div class="toolbar-group"><button id="selectAll" type="button">Select all</button><button id="clearSelection" type="button">Clear</button><button id="selectAlternating" type="button">Alternating</button></div>
-
-      <div class="editor-divider"></div>
-      <div class="section-heading compact"><div><h3>2. Labels and actions</h3><p>Labels are participant-facing. Actions control the simulated path.</p></div><button id="resetLabelsActions" type="button">Reset labels &amp; actions</button></div>
-      <div id="actionEditor" class="action-editor"></div>
-      <div id="mappingSummary" class="summary"></div>
+      <button id="resetLabelsActions" type="button">
+       Reset labels &amp; actions
+      </button>
+     </div>
+     <div class="action-editor" id="actionEditor">
+     </div>
+     <div class="summary" id="mappingSummary">
+     </div>
     </div>
-  </section>
-
-  <footer>
-    <strong>Concept prototype</strong> — simulated chair movement only. This tool is for exploring user-facing joystick mappings and is not connected to mobility-chair controls.
-  </footer>
-</main>
-<script src="app.js"></script>
-</body>
+   </section>
+   <footer>
+    <strong>
+     Concept prototype
+    </strong>
+    — simulated chair movement only. This tool is for exploring user-facing joystick mappings and is not connected to mobility-chair controls.
+   </footer>
+  </main>
+  <script src="app.js">
+  </script>
+ </body>
 </html>
+
